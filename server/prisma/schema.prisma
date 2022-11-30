@@ -1,0 +1,49 @@
+datasource postgres {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt   DateTime @default(now())
+  id          String   @id @default(cuid())
+  password    String
+  phoneNumber String
+  roles       Json
+  username    String   @unique
+}
+
+model Item {
+  comments     String?
+  createdAt    DateTime @default(now())
+  id           String   @id @default(cuid())
+  isExpandable Boolean
+  kind         Int
+  nmae         String
+  room         Int
+  stock        Int
+  updatedAt    DateTime @updatedAt
+}
+
+model Borrowe {
+  amount    Int
+  comments  String?
+  createdAt DateTime @default(now())
+  event     String
+  id        String   @id @default(cuid())
+  itemId    String
+  personId  String
+}
+
+model Room {
+  id   String @id @default(cuid())
+  name String @unique
+}
+
+model Kind {
+  id   String @id @default(cuid())
+  name String @unique
+}
